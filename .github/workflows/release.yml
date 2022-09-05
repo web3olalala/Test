@@ -94,12 +94,26 @@ jobs:
           target: wasm32-unknown-unknown
           default: true
 
+      - name: Download kusama strool result
+        uses: actions/download-artifact@v2
+        with:
+          name: bifrost-kusama-runtime
+          path: ${{ github.workspace }}/artifacts
+
+      - name: Download polkadot strool result
+        uses: actions/download-artifact@v2
+        with:
+          name: bifrost-polkadot-runtime
+          path: ${{ github.workspace }}/artifacts
+
       - name: Build bifrost
         working-directory: ${{ github.workspace }}
         run: |
           make build-all-release
           mkdir -p ${{ github.workspace }}/artifacts
           mv ${{ github.workspace }}/target/release/bifrost ${{ github.workspace }}/artifacts/
+          mv ${{ github.workspace }}/artifacts/bifrost-kusama-runtime/runtime/bifrost-kusama/target/strool/release/wbuild/bifrost-kusama-runtime/bifrost_kusama_runtime.compact.compressed.wasm ${{ github.workspace }}/artifacts/
+          mv ${{ github.workspace }}/artifacts/bifrost-polkadot-runtime/runtime/bifrost-polkadot/target/strool/release/wbuild/bifrost-polkadot-runtime/bifrost_polkadot_runtime.compact.compressed.wasm ${{ github.workspace }}/artifacts/
           pushd ${{ github.workspace }}/artifacts
           sha256sum bifrost | tee bifrost.sha256
           shasum -c bifrost.sha256
@@ -127,18 +141,6 @@ jobs:
           subwasm info ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm >> ${{ github.workspace }}-CHANGELOG.txt
           echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
 
-      - name: Download kusama strool result
-        uses: actions/download-artifact@v2
-        with:
-          name: bifrost-kusama-runtime
-          path: ${{ github.workspace }}/artifacts
-
-      - name: Download polkadot strool result
-        uses: actions/download-artifact@v2
-        with:
-          name: bifrost-polkadot-runtime
-          path: ${{ github.workspace }}/artifacts
-
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -150,9 +152,8 @@ jobs:
           files: |
             ${{ github.workspace }}/artifacts/bifrost
             ${{ github.workspace }}/artifacts/bifrost.sha256
-            ${{ github.workspace }}/artifacts/bifrost-kusama-runtime/runtime/bifrost-kusama/target/strool/release/wbuild/bifrost-kusama-runtime/bifrost_kusama_runtime.compact.compressed.wasm
-            ${{ github.workspace }}/artifacts/bifrost-polkadot-runtime/runtime/bifrost-polkadot/target/strool/release/wbuild/bifrost-polkadot-runtime/bifrost_polkadot_runtime.compact.compressed.wasm
-
+            ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm
+            ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm
 #       - uses: 8398a7/action-slack@v3
 #         if: failure()
 #         with:
