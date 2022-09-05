@@ -20,6 +20,18 @@ jobs:
       - name: Check to latest commit
         uses: actions/checkout@v3
 
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v1
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
+
 
 #       - name: Upload log
 #         uses: actions/upload-artifact@v2
@@ -28,13 +40,15 @@ jobs:
 #           path: log.txt
 
 
-  release:
-    name: Create Release
-    needs: srtool
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check to latest commit
-        uses: actions/checkout@v3
+#   release:
+#     name: Create Release
+#     needs: srtool
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check to latest commit
+#         uses: actions/checkout@v3
+
+
 
 #      - name: Srtool build bifrost-kusama
 #        id: srtool_build_kusama
@@ -114,20 +128,20 @@ jobs:
 #         with:
 #           name: log
 
-      - name: Subwasm info
-        run: |
-          echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
-
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
-          append_body: true
-          body_path: log2.txt
-          files: |
-            log2.txt
+#       - name: Subwasm info
+#         run: |
+#           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
+#
+#       - name: Create Release
+#         id: create_release
+#         uses: softprops/action-gh-release@v1
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           generate_release_notes: true
+#           append_body: true
+#           body_path: log2.txt
+#           files: |
+#             log2.txt
 #             log.txt
 #            ${{ github.workspace }}/artifacts/bifrost
 #            ${{ github.workspace }}/artifacts/bifrost.sha256
