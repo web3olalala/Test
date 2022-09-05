@@ -136,14 +136,14 @@ jobs:
 #         run: |
 #           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
 #
-#       - name: Create Release
-#         id: create_release
-#         uses: softprops/action-gh-release@v1
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 #           generate_release_notes: true
-#           append_body: true
-#           body_path: log2.txt
+          append_body: true
+          body_path: ${{ steps.git-cliff.outputs.changelog }}
 #           files: |
 #             log2.txt
 #             log.txt
