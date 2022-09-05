@@ -9,12 +9,30 @@ on:
       - 'b*'
 
 jobs:
-  srtool:
-    name: Build ${{ matrix.chain }}
-    strategy:
-      fail-fast: false
-      matrix:
-        chain: [ "bifrost-kusama", "bifrost-polkadot" ]
+#   srtool:
+#     name: Build ${{ matrix.chain }}
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         chain: [ "bifrost-kusama", "bifrost-polkadot" ]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check to latest commit
+#         uses: actions/checkout@v3
+
+
+
+
+#       - name: Upload log
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: log
+#           path: log.txt
+
+
+  release:
+    name: Create Release
+#     needs: srtool
     runs-on: ubuntu-latest
     steps:
       - name: Check to latest commit
@@ -31,22 +49,6 @@ jobs:
 
       - name: Print the changelog
         run: cat "${{ steps.git-cliff.outputs.changelog }}"
-
-
-#       - name: Upload log
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: log
-#           path: log.txt
-
-
-#   release:
-#     name: Create Release
-#     needs: srtool
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check to latest commit
-#         uses: actions/checkout@v3
 
 
 
