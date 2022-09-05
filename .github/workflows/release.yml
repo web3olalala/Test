@@ -20,21 +20,12 @@ jobs:
       - name: Check to latest commit
         uses: actions/checkout@v3
 
-      - name: changelog-ci
-        uses: saadmk11/changelog-ci@v1.0.0
-        id: changelog-ci
 
-      - name: Get Changelog Output
-        run: |
-          echo "${{ steps.changelog-ci.outputs.changelog }}"
-          echo "${{ steps.changelog-ci.outputs.changelog }}" >> log.txt
-
-
-      - name: Upload log
-        uses: actions/upload-artifact@v2
-        with:
-          name: log
-          path: log.txt
+#       - name: Upload log
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: log
+#           path: log.txt
 
 
   release:
@@ -118,27 +109,33 @@ jobs:
 #          subwasm info ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm >> ${{ github.workspace }}-CHANGELOG.txt
 #          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
 
-      - name: Download build result for job apk
-        uses: actions/download-artifact@v2
-        with:
-          name: log
+#       - name: Download build result for job apk
+#         uses: actions/download-artifact@v2
+#         with:
+#           name: log
 
 
       - name: Subwasm info
         run: |
           echo "## Bifrost Kusama Runtime" >> log2.txt
 
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
+        with:
+          from-tag: bifrost-v1.0.0
+          to-tag: HEAD
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
           append_body: true
           body_path: log2.txt
           files: |
             log2.txt
-            log.txt
+#             log.txt
 #            ${{ github.workspace }}/artifacts/bifrost
 #            ${{ github.workspace }}/artifacts/bifrost.sha256
 #            ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm
