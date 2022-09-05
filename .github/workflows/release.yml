@@ -45,7 +45,7 @@ jobs:
         id: git-cliff
         with:
           config: fixtures/cliff.toml
-          args: -vv --latest --strip header
+          args: HEAD~2..
         env:
           OUTPUT: CHANGELOG.md
 
