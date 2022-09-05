@@ -122,14 +122,14 @@ jobs:
           head-ref: 'bifrost-v1.0.2'
           base-ref: 'bifrost-v1.0.3'
 
-      - name: Get the changelog
+#       - name: Get the changelog
+#         run: |
+#           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
+
+
+      - name: Subwasm info
         run: |
           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
-
-
-#       - name: Subwasm info
-#         run: |
-#           echo "## Bifrost Kusama Runtime" >> log2.txt
 
       - name: Create Release
         id: create_release
