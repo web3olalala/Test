@@ -1,0 +1,79 @@
+[package]
+name = "node-cli"
+version = "0.9.54"
+authors = ["Liebi Technologies <bifrost@liebi.com>"]
+description = "Bifrost Parachain Node"
+build = "build.rs"
+default-run = "bifrost"
+edition = "2021"
+
+[[bin]]
+name = "bifrost"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# third-party dependencies
+clap = { version = "3.2", features = ["derive"] }
+codec = { package = "parity-scale-codec", version = "3.0.0" }
+log = "0.4.17"
+tracing-core = "=0.1.26"
+
+# primitives
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26" }
+
+# client dependencies
+sc-service = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+sc-sysinfo = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26" }
+sc-telemetry = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26" }
+sc-tracing = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26" }
+
+# node-specific dependencies
+node-service = { path = "../service", default-features = false }
+node-primitives = { path = "../primitives" }
+
+# CLI-specific dependencies
+sc-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+try-runtime-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+frame-try-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+node-inspect = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+
+# Cumulus dependencies
+cumulus-client-cli = { git = "https://github.com/paritytech/cumulus", branch = "polkadot-v0.9.26" }
+cumulus-client-service = { git = "https://github.com/paritytech/cumulus", branch = "polkadot-v0.9.26" }
+cumulus-primitives-core = { git = "https://github.com/paritytech/cumulus", branch = "polkadot-v0.9.26" }
+
+# Polkadot dependencies
+polkadot-primitives = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.26" }
+polkadot-cli = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.26" }
+polkadot-parachain = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.26" }
+
+[build-dependencies]
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.26", optional = true }
+
+[features]
+default = ["wasmtime", "cli"]
+wasmtime = ["sc-cli/wasmtime", "sc-service/wasmtime"]
+cli = [
+	"node-inspect",
+	"sc-cli",
+	"frame-benchmarking-cli",
+	'try-runtime-cli',
+	"sc-service",
+	"substrate-build-script-utils",
+]
+runtime-benchmarks = ["node-service/runtime-benchmarks"]
+with-bifrost-runtime = [
+	"node-service/with-bifrost-kusama-runtime",
+	"node-service/with-bifrost-polkadot-runtime",
+]
+with-bifrost-kusama-runtime = ["node-service/with-bifrost-kusama-runtime"]
+with-bifrost-polkadot-runtime = ["node-service/with-bifrost-polkadot-runtime"]
+with-all-runtime = ["with-bifrost-runtime"]
+try-runtime = ["node-service/try-runtime", "try-runtime-cli"]
+fast-runtime = ["node-service/fast-runtime"]

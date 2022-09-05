@@ -1,0 +1,14 @@
+Running subwasm v0.18.0
+🏋️  Runtime size:		1.435 MB (1,505,091 bytes)
+🗜  Compressed:			Yes, 80.99%
+✨ Reserved meta:		OK - [6D, 65, 74, 61]
+🎁 Metadata version:		V14
+🔥 Core version:		bifrost-954 (bifrost-0.tx1.au1)
+🗳️  system.setCode hash:		0x14f3d82e86ada59e280e41e85441fab045458dd9558b422d5f51667d2566f6c8
+🗳️  authorizeUpgrade hash:	0x0ede4c5c2fb741c0ab69aca07a2b75674a8f8cd75b6f7dd23ae476128cb2edc2
+#️⃣  Blake2-256 hash:		0x81fad6cc3071668706ad13ec2b73b51afb837dbb8a9b20bfaf191e881c55c0cd
+📦 IPFS:			https://www.ipfs.io/ipfs/QmVrF1GJ4jRk2ua6D2GnH9HA79wpgCXgV7JRe1ipAzQkxA
+
+## Bifrost Kusama Runtime
+## Bifrost Kusama Runtime
+```
