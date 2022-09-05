@@ -114,18 +114,6 @@ jobs:
 #         with:
 #           name: log
 
-      - name: Generate a changelog
-        id: git-cliff
-        uses: ./
-        with:
-          config: fixtures/cliff.toml
-          args: --verbose --strip footer
-        env:
-          OUTPUT: fixtures/CHANGELOG.md
-
-      - name: Print the changelog
-        run: cat "${{ steps.git-cliff.outputs.changelog }}"
-
       - name: Subwasm info
         run: |
           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
