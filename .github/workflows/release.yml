@@ -114,18 +114,17 @@ jobs:
 #         with:
 #           name: log
 
-      - name: Generate changelog
-        id: changelog
-        uses: metcalfc/changelog-generator@v3.0.0
+      - name: Generate a changelog
+        id: git-cliff
+        uses: ./
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-          head-ref: 'bifrost-v1.0.2'
-          base-ref: 'bifrost-v1.0.3'
+          config: fixtures/cliff.toml
+          args: --verbose --strip footer
+        env:
+          OUTPUT: fixtures/CHANGELOG.md
 
-#       - name: Get the changelog
-#         run: |
-#           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
-
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
 
       - name: Subwasm info
         run: |
