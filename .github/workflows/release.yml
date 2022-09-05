@@ -121,6 +121,10 @@ jobs:
           name: log
 
 
+      - name: Subwasm info
+        run: |
+          echo "## Bifrost Kusama Runtime" >> log2.txt
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -128,9 +132,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
           append_body: true
-          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          body_path: log2.txt
           files: |
-            ${{ github.workspace }}-CHANGELOG.txt
+            log2.txt
+            log.txt
 #            ${{ github.workspace }}/artifacts/bifrost
 #            ${{ github.workspace }}/artifacts/bifrost.sha256
 #            ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm
