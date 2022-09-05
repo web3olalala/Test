@@ -20,12 +20,15 @@ jobs:
       - name: Check to latest commit
         uses: actions/checkout@v3
 
-      - name: Subwasm info
-        run: |
-          echo "# Upgrade Priority
+      - name: changelog-ci
+        uses: saadmk11/changelog-ci@v1.0.0
+        id: changelog-ci
 
-          Low: This is a low priority release and you may upgrade at your convenience." >> log.txt
-          echo "## Bifrost Kusama Runtime" >> log.txt  
+      - name: Get Changelog Output
+        run: |
+          echo "${{ steps.changelog-ci.outputs.changelog }}"
+          echo "${{ steps.changelog-ci.outputs.changelog }}" >> log.txt
+
 
       - name: Upload log
         uses: actions/upload-artifact@v2
