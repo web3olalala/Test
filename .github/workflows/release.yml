@@ -9,7 +9,7 @@ on:
       - 'b*'
 
 jobs:
-  strool:
+  srtool:
     name: Build ${{ matrix.chain }} ${{ github.event.inputs.ref }}
     strategy:
       fail-fast: false
