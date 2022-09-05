@@ -118,9 +118,10 @@ jobs:
         id: changelog
         uses: metcalfc/changelog-generator@v3.0.0
         with:
-            myToken: ${{ secrets.GITHUB_TOKEN }}
-            head-ref: 'bifrost-v1.0.2'
-            base-ref: 'bifrost-v1.0.3'
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          head-ref: 'bifrost-v1.0.2'
+          base-ref: 'bifrost-v1.0.3'
+
       - name: Get the changelog
         run: |
           echo ${{ steps.changelog.outputs.changelog }} >> log2.txt
