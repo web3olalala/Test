@@ -148,12 +148,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
           append_body: true
-#          body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-#            ${{ github.workspace }}/artifacts/bifrost
-#            ${{ github.workspace }}/artifacts/bifrost.sha256
             ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm
             ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm
+#            ${{ github.workspace }}/artifacts/bifrost
+#            ${{ github.workspace }}/artifacts/bifrost.sha256
+
 #       - uses: 8398a7/action-slack@v3
 #         if: failure()
 #         with:
@@ -164,3 +164,4 @@ jobs:
 
 #             ${{ github.workspace }}/artifacts/bifrost
 #             ${{ github.workspace }}/artifacts/bifrost.sha256
+#          body_path: ${{ github.workspace }}-CHANGELOG.txt
