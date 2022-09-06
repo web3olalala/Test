@@ -128,7 +128,7 @@ jobs:
 
       - name: Subwasm info
         run: |
-          ls ${{ github.workspace }}/artifacts
+          tree ${{ github.workspace }}/artifacts
           echo "# Upgrade Priority
 
           Low: This is a low priority release and you may upgrade at your convenience." >> ${{ github.workspace }}-CHANGELOG.txt
