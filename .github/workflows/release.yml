@@ -119,27 +119,29 @@ jobs:
 #          shasum -c bifrost.sha256
 #          popd
 #
-#      # We now get extra information thanks to subwasm,
-#      - name: Install subwasm ${{ env.SUBWASM_VERSION }}
-#        run: |
-#          wget https://github.com/chevdor/subwasm/releases/download/v${{ env.SUBWASM_VERSION }}/subwasm_linux_amd64_v${{ env.SUBWASM_VERSION }}.deb
-#          sudo dpkg -i subwasm_linux_amd64_v${{ env.SUBWASM_VERSION }}.deb
-#          subwasm --version
-#
-#      - name: Subwasm info
-#        run: |
-#          echo "# Upgrade Priority
-#
-#          Low: This is a low priority release and you may upgrade at your convenience." >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo "## Bifrost Kusama Runtime" >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
-#          subwasm info ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo ' ' >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo "## Bifrost Polkadot Runtime" >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
-#          subwasm info ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm >> ${{ github.workspace }}-CHANGELOG.txt
-#          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
+      # We now get extra information thanks to subwasm,
+      - name: Install subwasm ${{ env.SUBWASM_VERSION }}
+        run: |
+          wget https://github.com/chevdor/subwasm/releases/download/v${{ env.SUBWASM_VERSION }}/subwasm_linux_amd64_v${{ env.SUBWASM_VERSION }}.deb
+          sudo dpkg -i subwasm_linux_amd64_v${{ env.SUBWASM_VERSION }}.deb
+          subwasm --version
+
+      - name: Subwasm info
+        run: |
+          mv ${{ github.workspace }}/artifacts/bifrost-kusama-runtime/runtime/bifrost-kusama/target/strool/release/wbuild/bifrost-kusama-runtime/bifrost_kusama_runtime.compact.compressed.wasm ${{ github.workspace }}/artifacts/
+          mv ${{ github.workspace }}/artifacts/bifrost-polkadot-runtime/runtime/bifrost-polkadot/target/strool/release/wbuild/bifrost-polkadot-runtime/bifrost_polkadot_runtime.compact.compressed.wasm ${{ github.workspace }}/artifacts/
+          echo "# Upgrade Priority
+
+          Low: This is a low priority release and you may upgrade at your convenience." >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "## Bifrost Kusama Runtime" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
+          subwasm info ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm >> ${{ github.workspace }}-CHANGELOG.txt
+          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
+          echo ' ' >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "## Bifrost Polkadot Runtime" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
+          subwasm info ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm >> ${{ github.workspace }}-CHANGELOG.txt
+          echo '```' >> ${{ github.workspace }}-CHANGELOG.txt
 
       - name: Create Release
         id: create_release
