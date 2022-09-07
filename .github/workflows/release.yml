@@ -10,7 +10,6 @@ on:
 jobs:
   release:
     name: Create Release
-    needs: srtool
     runs-on: ubuntu-latest
     steps:
       - name: srtool
