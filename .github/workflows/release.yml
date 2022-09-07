@@ -8,15 +8,15 @@ on:
 
 
 jobs:
+  call-workflow:
+    uses: ./.github/workflows/srtool1.yml@develop
+
   release:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
       - name: Check to latest commit
         uses: actions/checkout@v3
-
-      - name: srtool
-        uses: ./.github/workflows/srtool1.yml@develop
 
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
