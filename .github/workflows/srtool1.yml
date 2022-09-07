@@ -36,21 +36,16 @@ jobs:
 #          chain: ${{ matrix.chain }}
 #          runtime_dir: runtime/${{ matrix.chain }}
 #
-#      - name: Summary
-#        run: |
-#          echo '${{ steps.srtool_build.outputs.json }}' | jq > ${{ matrix.chain }}-srtool-digest.json
-#          cat ${{ matrix.chain }}-srtool-digest.json
-#          echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
+      - name: Summary
+        run: |
+          echo 'abc' >> log.txt
 #
 #      # it takes a while to build the runtime, so let's save the artifact as soon as we have it
-#      - name: Archive Artifacts for ${{ matrix.chain }}
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: ${{ matrix.chain }}-runtime
-#          path: |
-#            ${{ steps.srtool_build.outputs.wasm }}
-#            ${{ steps.srtool_build.outputs.wasm_compressed }}
-#            ${{ matrix.chain }}-srtool-digest.json
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: log
+          path: log.txt
 #
 #      # We now get extra information thanks to subwasm,
 #      - name: Install subwasm ${{ env.SUBWASM_VERSION }}

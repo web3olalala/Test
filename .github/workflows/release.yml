@@ -13,7 +13,6 @@ jobs:
 
   release:
     name: Create Release
-    needs: srtool
     runs-on: ubuntu-latest
     steps:
       - name: Check to latest commit
@@ -28,11 +27,15 @@ jobs:
           target: wasm32-unknown-unknown
           default: true
 
-#      - name: Download kusama strool result
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: bifrost-kusama-runtime
-#          path: ${{ github.workspace }}/artifacts
+      - name: Download kusama strool result
+        uses: actions/download-artifact@v2
+        with:
+          name: log
+          path: ${{ github.workspace }}/artifacts
+
+      - name: test
+        run: |
+          cat ${{ github.workspace }}/artifacts/log.txt
 #
 #      - name: Download polkadot strool result
 #        uses: actions/download-artifact@v2
