@@ -13,7 +13,7 @@ jobs:
     needs: srtool
     runs-on: ubuntu-latest
     steps:
-      - name:srtool
+      - name: srtool
         uses: ..github/workflows/srtool1.yml@develop
 
 
