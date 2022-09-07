@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: ./.github/workflows/srtool1.yml@develop
+    uses: ./.github/workflows/srtool1.yml
 
   release:
     name: Create Release
