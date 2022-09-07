@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name:srtool
-        uses: ./srtool1.yml@develop
+        uses: ..github/workflows/srtool1.yml@develop
 
 
       - name: Check to latest commit
