@@ -11,7 +11,6 @@ on:
 jobs:
   srtool:
     uses: ./.github/workflows/srtool.yml
-
   release:
     name: Create Release
     needs: srtool
@@ -30,13 +29,13 @@ jobs:
           default: true
 
       - name: Download kusama strool result
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: bifrost-kusama-runtime
           path: ${{ github.workspace }}/artifacts
 
       - name: Download polkadot strool result
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: bifrost-polkadot-runtime
           path: ${{ github.workspace }}/artifacts
@@ -91,4 +90,13 @@ jobs:
             ${{ github.workspace }}/artifacts/bifrost_kusama_runtime.compact.compressed.wasm
             ${{ github.workspace }}/artifacts/bifrost_polkadot_runtime.compact.compressed.wasm
 
-
+      - uses: 8398a7/action-slack@v3
+        if: failure()
+        with:
+          status: ${{ job.status }}
+          fields: repo,author,eventName,workflow,ref,commit
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
+  docker-image:
+    needs: [srtool,release]
+    uses: ./.github/workflows/docker-image.yml
