@@ -13,9 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
       - name: Check to latest commit
         run: |
           echo ${{ github.ref_name }}
+          echo ${{ steps.date.outputs.today }}
 #        with:
 #          fetch-depth: 0
 #      - name: Set up Docker Buildx
